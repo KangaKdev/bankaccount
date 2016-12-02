@@ -8,24 +8,29 @@ namespace BankAccount
 {
     public class Account
     {
-        public Account()
-        { }
+        private ulong m_balance;
+        private string m_name;
+        private uint m_id;
 
         public Account(uint id, string name, ulong balance=0)
-        { }
+        {
+            m_balance = balance;
+            m_name = name;
+            m_id = id;
+        }
 
         public ulong GetBalance()
         {
-            return 0;
+            return m_balance;
         }
 
         public string GetName()
         {
-            return "";
+            return m_name;
         }
         public uint GetID()
         {
-            return 0;
+            return m_id;
         }
     }
 }
