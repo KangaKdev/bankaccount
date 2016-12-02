@@ -17,7 +17,7 @@ namespace BankAccountSpecs
         [TestCase((ulong)10000)]
         public void A_new_account_is_initialized_with_correct_balance(ulong balance)
         {
-            uint id = 0;
+            uint id = 1;
             string name = "hubbabubba";
 
             Account account = new Account(id, name, balance);
@@ -28,7 +28,7 @@ namespace BankAccountSpecs
         [Test]
         public void A_new_account_can_initialized_with_no_balance()
         {
-            uint id = 0;
+            uint id = 1;
             string name = "hubbabubba";
             Account account = new Account(id, name);
             ulong currentbalance = account.GetBalance();
@@ -38,7 +38,7 @@ namespace BankAccountSpecs
         [Test]
         public void When_A_account_is_created_the_name_is_stored()
         {
-            uint id = 0;
+            uint id = 1;
             string name = "hubbabubba";
             Account account = new Account(id, name);
             string accountname = account.GetName();
@@ -72,6 +72,30 @@ namespace BankAccountSpecs
             uint id = 0;
             Assert.Catch<OverflowException>(() => new Account(id, name));
         }
+
+        [TestCase((ulong)1000)]
+        [TestCase((ulong)100000)]
+        [TestCase((ulong)999)]
+        public void Depositing_money_to_an_empty_account_puts_the_money_on_the_account(ulong amount)
+        {
+            Account account = new Account(1,"bla");
+            account.DepositMoney(amount);
+
+            Assert.AreEqual(amount,account.GetBalance());
+        }
+
+        [TestCase((ulong)1000, (ulong)10000)]
+        [TestCase((ulong)100000, (ulong)9484)]
+        [TestCase((ulong)999, (ulong)57373)]
+        public void Depositing_money_to_an_account_increases_the_balance_by_Amount(ulong balance, ulong amount)
+        {
+
+            Account account = new Account(1, "bla",balance);
+            account.DepositMoney(amount);
+
+            Assert.AreEqual(amount+balance, account.GetBalance());
+        }
+
 
     }
 }

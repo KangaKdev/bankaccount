@@ -42,5 +42,10 @@ namespace BankAccount
         {
             return m_id;
         }
+
+        public void DepositMoney(ulong amount)
+        {
+            m_balance += amount;
+        }
     }
 }
