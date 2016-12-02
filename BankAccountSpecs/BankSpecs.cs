@@ -144,5 +144,35 @@ namespace BankAccountSpecs
         {
             Assert.Catch<Exception>(() => _bank.WithdrawMoney(2, 1000));
         }
+
+
+        [Test]
+        public void Transfer_money_with_enough_balance_removes_money_from_fromAccount()
+        {
+            Bank bank = new Bank();
+
+
+            Account accountFrom = bank.OpenAccount("Account1", 1000);
+            Account accountTo = bank.OpenAccount("Account2", 1000);
+
+            bank.TransferMoney(accountFrom.GetID(), accountTo.GetID(), 500);
+            Assert.AreEqual(500, accountFrom.GetBalance());
+        }
+
+
+        [Test]
+        public void Transfer_money_with_enough_balance_adds_money_to_ToAccount()
+        {
+            Bank bank = new Bank();
+
+
+            Account accountFrom = bank.OpenAccount("Account1", 1000);
+            Account accountTo = bank.OpenAccount("Account2", 1000);
+
+            bank.TransferMoney(accountFrom.GetID(), accountTo.GetID(), 500);
+            Assert.AreEqual(1500, accountTo.GetBalance());
+        }
+
+
     }
 }
