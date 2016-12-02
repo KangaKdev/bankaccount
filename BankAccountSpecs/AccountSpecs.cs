@@ -84,5 +84,18 @@ namespace BankAccountSpecs
             Assert.AreEqual(amount,account.GetBalance());
         }
 
+        [TestCase((ulong)1000, (ulong)10000)]
+        [TestCase((ulong)100000, (ulong)9484)]
+        [TestCase((ulong)999, (ulong)57373)]
+        public void Depositing_money_to_an_account_increases_the_balance_by_Amount(ulong balance, ulong amount)
+        {
+
+            Account account = new Account(1, "bla",balance);
+            account.DepositMoney(amount);
+
+            Assert.AreEqual(amount+balance, account.GetBalance());
+        }
+
+
     }
 }
