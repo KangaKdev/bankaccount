@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace BankAccount
 {
-    class Account
+    public class Account
     {
+        public Account()
+        { }
+
+        public Account(ulong balance)
+        { }
+
+        public int GetBalance()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
