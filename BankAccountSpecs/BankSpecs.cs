@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
@@ -31,6 +32,25 @@ namespace BankAccountSpecs
         }
 
         [Test]
+        public void A_New_Account_Can_Be_Opened_In_A_Bank_Without_Any_Balance()
+        {
+            var bank = new Bank();
+            var name = "";
+            var account = bank.OpenAccount(name);
+            Assert.AreEqual(0, account.GetBalance());
+        }
+
+        [Test]
+        public void A_New_Account_Can_Be_Opened_In_A_Bank_With_Balance_Equals_500000()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 500000;
+            var account = bank.OpenAccount(name,balance);
+            Assert.AreEqual(balance, account.GetBalance());
+        }
+
+        [Test]
         public void A_Bank_Can_Get_Information_From_Existing_Account()
         {
             var bank = new Bank();
@@ -44,9 +64,11 @@ namespace BankAccountSpecs
         }
 
         [Test]
-        public void Test()
+        public void Get_Information_From_not_Existing_Account_Fails()
         {
-            
+            var bank = new Bank();
+            Assert.Catch<DirectoryNotFoundException>(() => bank.GetAccountInformation(2));
         }
+
     }
 }

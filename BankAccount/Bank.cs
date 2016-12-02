@@ -17,7 +17,7 @@ namespace BankAccount
         }
         public List<Account> Accounts{ get; set; }
 
-        public Account OpenAccount(string name, ulong balance)
+        public Account OpenAccount(string name, ulong balance = 0)
         {
             uint id = _currentAcountId++;
 
