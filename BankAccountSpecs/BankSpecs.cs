@@ -67,7 +67,41 @@ namespace BankAccountSpecs
         public void Get_Information_From_not_Existing_Account_Fails()
         {
             var bank = new Bank();
-            Assert.Catch<DirectoryNotFoundException>(() => bank.GetAccountInformation(2));
+            Assert.Catch<Exception>(() => bank.GetAccountInformation(2));
+        }
+
+        [Test]
+        public void A_Bank_Can_Close_An_Existing_Account_With_Balance_0()
+        {
+            var bank = new Bank();
+            var name = "";
+           
+            var account = bank.OpenAccount(name);
+            var id = account.GetID();
+
+            bank.CloseAccount(id);
+
+            Assert.Catch<Exception>(() => bank.GetAccountInformation(id));
+        }
+
+        [Test]
+        public void A_Bank_Can_NOT_Close_An_Existing_Account_With_Balance_100()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            var account = bank.OpenAccount(name,balance);
+            var id = account.GetID();
+
+            Assert.Catch<Exception>(() => bank.CloseAccount(id));
+        }
+
+        [Test]
+        public void A_Bank_Can_NOT_Close_A_NOT_Existing_Account()
+        {
+            var bank = new Bank();
+
+            Assert.Catch<Exception>(() => bank.CloseAccount(3));
         }
 
     }
