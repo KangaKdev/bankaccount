@@ -11,12 +11,21 @@ namespace BankAccount
         public Account()
         { }
 
-        public Account(ulong balance)
+        public Account(uint id, string name, ulong balance=0)
         { }
 
-        public int GetBalance()
+        public ulong GetBalance()
         {
-            throw new NotImplementedException();
+            return 0;
+        }
+
+        public string GetName()
+        {
+            return "";
+        }
+        public uint GetID()
+        {
+            return 0;
         }
     }
 }
