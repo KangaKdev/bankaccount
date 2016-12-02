@@ -82,6 +82,9 @@ namespace BankAccount
             Account fromAccount = Accounts.FirstOrDefault(x => x.GetID() == accountFromId);
             Account toAccount = Accounts.FirstOrDefault(x => x.GetID() == accountToId);
 
+            if (fromAccount.GetBalance()<amount) {
+                return false;
+            }
             fromAccount.WithdrawMoney(amount);
             toAccount.DepositMoney(amount);
 

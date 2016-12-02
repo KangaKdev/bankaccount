@@ -188,5 +188,20 @@ namespace BankAccountSpecs
         }
 
 
+        [Test]
+        public void Transfer_money_without_enough_balance_does_not_change_both_accounts()
+        {
+            Bank bank = new Bank();
+
+
+            Account accountFrom = bank.OpenAccount("Account1", 1000);
+            Account accountTo = bank.OpenAccount("Account2", 1000);
+
+            bank.TransferMoney(accountFrom.GetID(), accountTo.GetID(), 2000);
+            Assert.AreEqual(1000, accountFrom.GetBalance());
+            Assert.AreEqual(1000, accountTo.GetBalance());
+        }
+
+
     }
 }
