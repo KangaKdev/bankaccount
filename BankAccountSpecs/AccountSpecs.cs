@@ -56,7 +56,13 @@ namespace BankAccountSpecs
             Assert.AreEqual(id, accountid);
         }
 
-
+        [TestCase((uint)123456789)]
+        [TestCase((uint)234567890)]
+        public void A_account_id_cant_be_bigger_than_8_digits(uint id)
+        {
+            string name = "hubbabubba";
+            Assert.Catch <OverflowException>(() => new Account(id, name));
+        }
 
     }
 }
