@@ -125,6 +125,40 @@ namespace BankAccountSpecs
             Assert.Catch<Exception>(()=> bank.DepositMoney(2, 1000));
         }
 
+        [Test]
+        public void A_Bank_Can_Withdraw_Money_Within_Balance_From_An_Existing_Account()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 50;
+            var account = bank.OpenAccount(name, balance);
+            bank.WithdrawMoney(account.GetID(), amount);
+
+            Assert.AreEqual(balance - amount, account.GetBalance());
+        }
+
+        [Test]
+        public void A_Bank_Can_Withdraw_Money_Over_Balance_From_An_Existing_Account()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 200;
+
+            var account = bank.OpenAccount(name, balance);
+
+            Assert.Catch<Exception>(() => bank.WithdrawMoney(account.GetID(), amount));
+        }
+
+        [Test]
+        public void Withdraw_Money_From_A_Not_Existing_Account_Fails()
+        {
+            var bank = new Bank();
+
+            Assert.Catch<Exception>(() => bank.WithdrawMoney(2, 1000));
+        }
+
 
     }
 }
