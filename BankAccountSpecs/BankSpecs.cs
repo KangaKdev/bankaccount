@@ -104,33 +104,61 @@ namespace BankAccountSpecs
             Assert.Catch<Exception>(() => bank.CloseAccount(3));
         }
 
-
         [Test]
-        public void Transfer_money_with_enough_balance_removes_money_from_fromAccount()
+        public void A_Bank_Can_Deposit_Money_to_An_Existing_Account()
         {
-            Bank bank = new Bank();
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 200;
+            var account = bank.OpenAccount(name, balance);
+            bank.DepositMoney(account.GetID(), amount);
 
-            
-            Account accountFrom = bank.OpenAccount("Account1", 1000);
-            Account accountTo = bank.OpenAccount("Account2", 1000);
-
-            bank.TransferMoney(accountFrom.GetID(), accountTo.GetID(), 500);
-            Assert.AreEqual(500, accountFrom.GetBalance());
+            Assert.AreEqual(balance + amount, account.GetBalance());
         }
 
+        [Test]
+        public void Deposit_Money_to_A_Not_Existing_Account_Fails()
+        {
+            var bank = new Bank();
+
+            Assert.Catch<Exception>(()=> bank.DepositMoney(2, 1000));
+        }
 
         [Test]
-        public void Transfer_money_with_enough_balance_adds_money_to_ToAccount()
+        public void A_Bank_Can_Withdraw_Money_Within_Balance_From_An_Existing_Account()
         {
-            Bank bank = new Bank();
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 50;
+            var account = bank.OpenAccount(name, balance);
+            bank.WithdrawMoney(account.GetID(), amount);
 
-
-            Account accountFrom = bank.OpenAccount("Account1", 1000);
-            Account accountTo = bank.OpenAccount("Account2", 1000);
-
-            bank.TransferMoney(accountFrom.GetID(), accountTo.GetID(), 500);
-            Assert.AreEqual(1500, accountTo.GetBalance());
+            Assert.AreEqual(balance - amount, account.GetBalance());
         }
+
+        [Test]
+        public void A_Bank_Can_Withdraw_Money_Over_Balance_From_An_Existing_Account()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 200;
+
+            var account = bank.OpenAccount(name, balance);
+
+            Assert.Catch<Exception>(() => bank.WithdrawMoney(account.GetID(), amount));
+        }
+
+        [Test]
+        public void Withdraw_Money_From_A_Not_Existing_Account_Fails()
+        {
+            var bank = new Bank();
+
+            Assert.Catch<Exception>(() => bank.WithdrawMoney(2, 1000));
+        }
+
 
     }
 }

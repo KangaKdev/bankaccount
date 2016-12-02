@@ -33,7 +33,7 @@ namespace BankAccount
             var information = new Dictionary<string,string>();
             var account = Accounts.FirstOrDefault(x => x.GetID() == accountId);
 
-            if(account==null) throw new Exception();
+            if(account==null) throw new Exception("Acount does not exist");
 
             information.Add("Balance",account.GetBalance().ToString());
             information.Add("Name",account.GetName());
@@ -46,7 +46,7 @@ namespace BankAccount
         {
             var account = Accounts.FirstOrDefault(x => x.GetID() == id);
 
-            if (account == null) throw new Exception();
+            if (account == null) throw new Exception("Account does not exist");
 
 
             if(account.GetBalance() != 0)
@@ -56,15 +56,25 @@ namespace BankAccount
            
         }
 
-        public bool TransferMoney(uint accountFromId, uint accountToId, ulong amount)
+        public void DepositMoney(uint id, ulong amount)
         {
-            Account fromAccount = Accounts.FirstOrDefault(x => x.GetID() == accountFromId);
-            Account toAccount = Accounts.FirstOrDefault(x => x.GetID() == accountToId);
+            var account = Accounts.FirstOrDefault(x => x.GetID() == id);
 
-            fromAccount.WithdrawMoney(amount);
-            toAccount.DepositMoney(amount);
-            
-            return true;
+            if (account == null) throw new Exception("Account does not exist");
+
+            account.DepositMoney(amount);
+
+        }
+
+        public void WithdrawMoney(uint id, ulong amount)
+        {
+            var account = Accounts.FirstOrDefault(x => x.GetID() == id);
+
+            if (account == null) throw new Exception("Account does not exist");
+
+            if(false == account.WithdrawMoney(amount))
+                throw new Exception("Balance not sufficient!");
+
         }
     }
 }
