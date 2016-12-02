@@ -104,5 +104,27 @@ namespace BankAccountSpecs
             Assert.Catch<Exception>(() => bank.CloseAccount(3));
         }
 
+        [Test]
+        public void A_Bank_Can_Deposit_Money_to_An_Existing_Account()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 100;
+            ulong amount = 200;
+            var account = bank.OpenAccount(name, balance);
+            bank.DepositMoney(account.GetID(), amount);
+
+            Assert.AreEqual(balance + amount, account.GetBalance());
+        }
+
+        [Test]
+        public void Deposit_Money_to_A_Not_Existing_Account_Fails()
+        {
+            var bank = new Bank();
+
+            Assert.Catch<Exception>(()=> bank.DepositMoney(2, 1000));
+        }
+
+
     }
 }

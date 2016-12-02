@@ -55,5 +55,15 @@ namespace BankAccount
             Accounts.Remove(account);
            
         }
+
+        public void DepositMoney(uint id, ulong amount)
+        {
+            var account = Accounts.FirstOrDefault(x => x.GetID() == id);
+
+            if (account == null) throw new Exception();
+
+            account.DepositMoney(amount);
+
+        }
     }
 }
