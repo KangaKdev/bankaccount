@@ -47,5 +47,15 @@ namespace BankAccount
         {
             m_balance += amount;
         }
+
+        public bool WithdrawMoney(ulong amount)
+        {
+            if (m_balance < amount)
+            {
+                return false;
+            }
+            m_balance -= amount;
+            return true;
+        }
     }
 }

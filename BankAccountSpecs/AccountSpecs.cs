@@ -87,13 +87,35 @@ namespace BankAccountSpecs
         [TestCase((ulong)1000, (ulong)10000)]
         [TestCase((ulong)100000, (ulong)9484)]
         [TestCase((ulong)999, (ulong)57373)]
-        public void Depositing_money_to_an_account_increases_the_balance_by_Amount(ulong balance, ulong amount)
+        public void Depositing_money_to_an_account_increases_the_balance_by_amount(ulong balance, ulong amount)
         {
 
             Account account = new Account(1, "bla",balance);
             account.DepositMoney(amount);
 
             Assert.AreEqual(amount+balance, account.GetBalance());
+        }
+
+
+        [TestCase((ulong)10000, (ulong)10000)]
+        [TestCase((ulong)10000, (ulong)9484)]
+        [TestCase((ulong)99999, (ulong)57373)]
+        public void Withdrawing_money_with_enough_balance_decreases_the_balance_by_amount(ulong balance, ulong amount)
+        {
+
+            Account account = new Account(1, "bla", balance);
+            Assert.IsTrue(account.WithdrawMoney(amount));
+            Assert.AreEqual(balance-amount, account.GetBalance());
+        }
+
+        [TestCase((ulong)1000, (ulong)10000)]
+        [TestCase((ulong)1000, (ulong)9484)]
+        [TestCase((ulong)9999, (ulong)57373)]
+        public void Withdrawing_money_without_enough_balance_returns_false(ulong balance, ulong amount)
+        {
+
+            Account account = new Account(1, "bla", balance);
+            Assert.IsFalse(account.WithdrawMoney(amount));
         }
 
 
