@@ -15,7 +15,7 @@ namespace BankAccountSpecs
     public class BankSpecs
     {
         [Test]
-        public void A_New_Bank_Must_Not_Have_Any_Account()
+        public void A_New_Bank_Must_Not_Have_Any_Accounts()
         {
             var bank = new Bank();
             Assert.AreEqual(0,bank.Accounts.Count);
@@ -40,13 +40,16 @@ namespace BankAccountSpecs
             Assert.AreEqual(0, account.GetBalance());
         }
 
-        [Test]
-        public void A_New_Account_Can_Be_Opened_In_A_Bank_With_Balance_Equals_500000()
+        [TestCase((ulong)1000)]
+        [TestCase((ulong)1500)]
+        [TestCase((ulong)9999)]
+        [TestCase((ulong)1)]
+        [TestCase((ulong)0)]
+        public void A_New_Account_Can_Be_Opened_In_A_Bank_With_Balance(ulong balance)
         {
             var bank = new Bank();
             var name = "";
-            ulong balance = 500000;
-            var account = bank.OpenAccount(name,balance);
+            var account = bank.OpenAccount(name, balance);
             Assert.AreEqual(balance, account.GetBalance());
         }
 
@@ -85,7 +88,7 @@ namespace BankAccountSpecs
         }
 
         [Test]
-        public void A_Bank_Can_NOT_Close_An_Existing_Account_With_Balance_100()
+        public void A_Bank_Can_NOT_Close_An_Existing_Account_With_Balance()
         {
             var bank = new Bank();
             var name = "";
