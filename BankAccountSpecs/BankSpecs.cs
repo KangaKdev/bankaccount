@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using BankAccount;
@@ -26,6 +27,18 @@ namespace BankAccountSpecs
             var name = "";
             ulong balance = 0;
             var account = bank.OpenAccount(name, balance);
+            Assert.IsNotNull(account);
+        }
+
+        [Test]
+        public void A_Bank_Can_Get_Information_From_Existing_Account()
+        {
+            var bank = new Bank();
+            var name = "";
+            ulong balance = 0;
+            var account = bank.OpenAccount(name, balance);
+            var accountInformation = bank.GetAccountInformation(account.GetID());
+            Assert.AreEqual(account.GetBalance().ToString(), accountInformation["Balance"]);
         }
     }
 }
