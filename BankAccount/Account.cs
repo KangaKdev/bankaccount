@@ -21,6 +21,11 @@ namespace BankAccount
                 throw new OverflowException("ID more than 8 digits!");
             }
 
+            if (id == 0)
+            {
+                throw new OverflowException("ID is zero!");
+            }
+
             m_id = id;
         }
 

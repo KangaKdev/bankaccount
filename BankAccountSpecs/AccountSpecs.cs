@@ -58,10 +58,19 @@ namespace BankAccountSpecs
 
         [TestCase((uint)123456789)]
         [TestCase((uint)234567890)]
+        [TestCase((uint)100000000)]
         public void A_account_id_cant_be_bigger_than_8_digits(uint id)
         {
             string name = "hubbabubba";
             Assert.Catch <OverflowException>(() => new Account(id, name));
+        }
+
+        [Test]
+        public void A_account_id_cant_be_zero()
+        {
+            string name = "hubbabubba";
+            uint id = 0;
+            Assert.Catch<OverflowException>(() => new Account(id, name));
         }
 
     }
