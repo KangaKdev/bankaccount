@@ -55,5 +55,16 @@ namespace BankAccount
             Accounts.Remove(account);
            
         }
+
+        public bool TransferMoney(uint accountFromId, uint accountToId, ulong amount)
+        {
+            Account fromAccount = Accounts.FirstOrDefault(x => x.GetID() == accountFromId);
+            Account toAccount = Accounts.FirstOrDefault(x => x.GetID() == accountToId);
+
+            fromAccount.WithdrawMoney(amount);
+            toAccount.DepositMoney(amount);
+            
+            return true;
+        }
     }
 }
