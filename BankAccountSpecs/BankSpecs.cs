@@ -42,5 +42,11 @@ namespace BankAccountSpecs
             Assert.AreEqual(account.GetID().ToString(), accountInformation["Id"]);
             Assert.AreEqual(account.GetName(), accountInformation["Name"]);
         }
+
+        [Test]
+        public void Test()
+        {
+            
+        }
     }
 }
