@@ -39,6 +39,8 @@ namespace BankAccountSpecs
             var account = bank.OpenAccount(name, balance);
             var accountInformation = bank.GetAccountInformation(account.GetID());
             Assert.AreEqual(account.GetBalance().ToString(), accountInformation["Balance"]);
+            Assert.AreEqual(account.GetID().ToString(), accountInformation["Id"]);
+            Assert.AreEqual(account.GetName(), accountInformation["Name"]);
         }
     }
 }
