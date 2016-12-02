@@ -16,6 +16,16 @@ namespace BankAccount
         {
             m_balance = balance;
             m_name = name;
+            if (id >= (uint)100000000)
+            {
+                throw new OverflowException("ID more than 8 digits!");
+            }
+
+            if (id == 0)
+            {
+                throw new OverflowException("ID is zero!");
+            }
+
             m_id = id;
         }
 
